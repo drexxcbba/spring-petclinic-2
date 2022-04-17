@@ -28,15 +28,17 @@ pipeline {
         }
       }
     }
-    node {
-      def remote = [:]
-      remote.name = 'test'
-      remote.host = '192.168.0.22'
-      remote.user = 'juan'
-      remote.password = 'juan1999'
-      remote.allowAnyHosts = true
-      stage('Remote SSH') {
-        sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
+    stage('Run on server){
+      node {
+        def remote = [:]
+        remote.name = 'test'
+        remote.host = '192.168.0.22'
+        remote.user = 'juan'
+        remote.password = 'juan1999'
+        remote.allowAnyHosts = true
+        stage('Remote SSH') {
+          sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
+        }
       }
     }
   }
