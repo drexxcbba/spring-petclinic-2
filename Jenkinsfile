@@ -29,13 +29,13 @@ pipeline {
       }
     }
     stage('Run on dev server'){
-      def remote = [:]
-      remote.name = 'run'
-      remote.host = '192.168.0.22'
-      remote.user = 'juan'
-      remote.password = 'juan1999'
-      remote.allowAnyHosts = true
       steps {
+        def remote = [:]
+        remote.name = 'run'
+        remote.host = '192.168.0.22'
+        remote.user = 'juan'
+        remote.password = 'juan1999'
+        remote.allowAnyHosts = true
         sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
       }
     }
