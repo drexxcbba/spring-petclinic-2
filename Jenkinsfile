@@ -35,7 +35,9 @@ pipeline {
       remote.user = 'juan'
       remote.password = 'juan1999'
       remote.allowAnyHosts = true
-      sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
+      steps {
+        sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
+      }
     }
   }
 } 
