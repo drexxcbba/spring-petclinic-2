@@ -30,7 +30,7 @@ pipeline {
     }
     stage('Run on dev server'){
       def remote = [:]
-      remote.name = 'test'
+      remote.name = 'run'
       remote.host = '192.168.0.22'
       remote.user = 'juan'
       remote.password = 'juan1999'
