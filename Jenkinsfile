@@ -28,7 +28,7 @@ pipeline {
         }
       }
     }
-    stage('Run on server){
+    stage('Run on server'){
       steps {
         build(job: 'Jenkinsfile-2')
       }
