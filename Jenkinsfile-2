@@ -5,7 +5,10 @@ node {
   remote.user = 'juan'
   remote.password = 'juan1999'
   remote.allowAnyHosts = true
-  stage('Remote SSH') {
+  stage('Pull Lastest') {
+    sshCommand remote: remote, command: "echo juan1999 | sudo -S docker pull drexxcbba/petclinic"
+  }
+  stage('Exec container') {
     sshCommand remote: remote, command: "echo juan1999 | sudo -S docker run -d drexxcbba/petclinic"
   }
 }
