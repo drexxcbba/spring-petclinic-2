@@ -5,6 +5,13 @@ pipeline {
   tools {
      maven 'maven-3'
   }
+  stage ('Scan and Build Jar File') {
+    steps {
+      withSonarQubeEnv(installationName: 'Production SonarQubeScanner', credentialsId: 'sonar-key') {
+           sh 'mvn clean package sonar:sonar'
+      }
+    }
+  }
   stages {
     stage('App complie') {
       steps {
@@ -19,12 +26,6 @@ pipeline {
     stage('Generate jar') {
       steps {
         sh './mvnw clean package'
-      }
-    }
-    stage('Docker Build') {
-      agent any
-      steps {
-        sh 'docker build -t drexxcbba/petclinic:latest .'
       }
     }
   }
