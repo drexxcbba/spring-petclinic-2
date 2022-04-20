@@ -7,36 +7,17 @@ pipeline {
   }
   stages {
     stage ('Scan and Build Jar File') {
-      steps {
         withSonarQubeEnv(installationName: 'sonarserver', credentialsId: 'sonar-key') {
              sh 'mvn clean package sonar:sonar'
         }
-      }
     }
     stage("Quality Gate"){
-      steps{
         timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-         }
-       }
-    }      
-    stage('App complie') {
-      steps {
-        sh './mvnw compile'
-      }
-    }
-    stage('App test') {
-      steps {
-        sh './mvnw test'
-      }
-    }
-    stage('Generate jar') {
-      steps {
-        sh './mvnw clean package'
-      }
-    }
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+        }
+     }
   }
 } 
