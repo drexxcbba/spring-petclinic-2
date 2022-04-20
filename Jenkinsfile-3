@@ -7,11 +7,9 @@ pipeline {
   }
   stages {
     stage ('Scan and Build Jar File') {
-        node {
-              withSonarQubeEnv(installationName: 'sonarserver', credentialsId: 'sonar-key') {
-                 sh 'mvn clean package sonar:sonar'
-              }    
-          }
+       withSonarQubeEnv('sonarserver') {
+          sh 'mvn clean package sonar:sonar'
+       }    
     }
     stage("Quality Gate"){
         timeout(time: 1, unit: 'HOURS') {
