@@ -1,0 +1,32 @@
+#!groovy
+
+pipeline {
+  agent any
+  tools {
+     maven 'maven-3'
+  }
+  stages {
+    stage ('Scan and Build Jar File') {
+      steps {
+        withSonarQubeEnv(installationName: 'sonarserver', credentialsId: 'sonar-key') {
+             sh 'mvn clean package sonar:sonar'
+        }
+      }
+    }
+    stage('App complie') {
+      steps {
+        sh './mvnw compile'
+      }
+    }
+    stage('App test') {
+      steps {
+        sh './mvnw test'
+      }
+    }
+    stage('Generate jar') {
+      steps {
+        sh './mvnw clean package'
+      }
+    }
+  }
+} 
