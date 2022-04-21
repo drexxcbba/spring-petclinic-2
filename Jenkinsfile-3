@@ -55,12 +55,11 @@ pipeline {
           def remote = [:]
           remote.name = 'test'
           remote.host = '192.168.0.10'
+          remote.user = 'rodrigo'
+          remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
-          withCredentials([usernamePassword(credentialsId: 'rodrigo-machine', passwordVariable: 'rodrigoPassword', usernameVariable: 'rodrigoUser')]) {
-            remote.user = rodrigoUser
-            remote.password = rodrigoPassword
-            sshCommand remote: remote, command: "whoami"
-          }
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d drexxcbba/petclinic"
         }
       }
     }
