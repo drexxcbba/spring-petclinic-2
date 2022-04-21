@@ -55,10 +55,12 @@ pipeline {
           def remote = [:]
           remote.name = 'test'
           remote.host = '192.168.0.10'
-          remote.user = 'rodrigo'
-          remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
-          sshCommand remote: remote, command: "whoami"
+          withCredentials([usernamePassword(credentialsId: 'rodrigo-machine', passwordVariable: 'rodrigoPassword', usernameVariable: 'rodrigoUser')]) {
+            remote.user = rodrigoUser
+            remote.password = rodrigoPassword
+            sshCommand remote: remote, command: "whoami"
+          }
         }
       }
     }
