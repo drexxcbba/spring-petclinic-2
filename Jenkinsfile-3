@@ -21,5 +21,20 @@ pipeline {
             }
          }
      }
+    stage('App complie') {
+      steps {
+        sh './mvnw compile'
+      }
+    }
+    stage('App test') {
+      steps {
+        sh './mvnw test'
+      }
+    }
+    stage('Generate jar') {
+      steps {
+        sh './mvnw clean package'
+      }
+    }
    }
 } 
