@@ -49,5 +49,18 @@ pipeline {
         }
       }
     }
+    stage('Test ssh') {
+      steps{
+        script{
+          def remote = [:]
+          remote.name = 'test'
+          remote.host = '192.168.0.10'
+          remote.user = 'rodrigo'
+          remote.password = 'rodrigo24'
+          remote.allowAnyHosts = true
+          sshCommand remote: remote, command: "whoami"
+        }
+      }
+    }
   }
 } 
