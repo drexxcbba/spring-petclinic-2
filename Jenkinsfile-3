@@ -49,7 +49,7 @@ pipeline {
         }
       }
     }
-    stage('Test ssh') {
+    stage('Docker pull & Docker run') {
       steps{
         script{
           def remote = [:]
