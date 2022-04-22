@@ -6,26 +6,14 @@ pipeline {
      maven 'maven-3'
   }
   stages {
-    stage ('Scan and Build Jar File') {
-      steps {
-        withSonarQubeEnv(installationName: 'sonarserver', credentialsId: 'sonar-key') {
-             sh 'mvn clean package sonar:sonar'
-        }
-      }
-    }
-    stage('App complie') {
-      steps {
-        sh './mvnw compile'
-      }
-    }
-    stage('App test') {
-      steps {
-        sh './mvnw test'
-      }
-    }
     stage('Generate jar') {
       steps {
         sh './mvnw clean package'
+      }
+    }
+    stage('Upload to Artifactory'){
+      steps{
+        sh 'curl -X PUT admin:JjVv135@2k22 -T /target/spring-petclinic-2.6.0-SNAPSHOT.jar http://192.168.0.23:8081/artifactory/libs-snapshot-local/spring-petclinic-2.6.0-SNAPSHOT.jar'
       }
     }
   }
