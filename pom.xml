@@ -28,6 +28,19 @@
     <spring-format.version>0.0.31</spring-format.version>
 
   </properties>
+  
+  <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>artifactserver-releases</name>
+        <url>http://192.168.0.12:8081/artifactory/spring-petclinic</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>artifactserver-snapshots</name>
+        <url>http://192.168.0.12:8081/artifactory/spring-petclinic</url>
+    </snapshotRepository>
+  </distributionManagement>
 
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
