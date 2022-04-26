@@ -11,7 +11,8 @@ pipeline {
        steps {
           withSonarQubeEnv('sonarserver') {
              sh 'mvn clean package sonar:sonar \
-                   -Dsonar.organization=drexxcbba'
+                   -Dsonar.organization=drexxcbba \
+                   -Dsonar.projectKey=drexxcbba_spring-petclinic'
           }
        }
     }
