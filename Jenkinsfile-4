@@ -1,0 +1,22 @@
+#!groovy
+
+pipeline {
+  agent any
+  tools {
+     maven 'maven-3'
+  }
+  stages {
+    stage("build & SonarQube analysis") {
+       agent any
+       steps {
+          withSonarQubeEnv('sonarserver') {
+             sh 'mvn clean package sonar:sonar \
+                   -Dsonar.projectKey=drexxcbba_spring-petclinic \
+                   -Dsonar.organization=drexxcbba \
+                   -Dsonar.url=https://sonarcloud.io \
+                   -Dsonar.login=4dbf653ac064428aca95d07401230cb3cf14469d'
+          }
+       }
+    }
+  }
+}
