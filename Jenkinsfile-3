@@ -33,9 +33,14 @@ pipeline {
         sh './mvnw test'
       }
     }
-    stage('Generate jar and upload to Artifactory') {
+    stage('Generate jar') {
       steps {
         sh './mvnw clean package deploy'
+      }
+    }
+    stage('Upload to Artifactory') {
+      steps {
+        sh 'mvn deploy'
       }
     }
     stage('Docker Build') {
