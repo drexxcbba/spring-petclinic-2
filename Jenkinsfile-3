@@ -23,24 +23,9 @@ pipeline {
             }
          }
      }
-    stage('App complie') {
+    stage('Tests, generate jar and Upload to Artifactory') {
       steps {
-        sh './mvnw compile'
-      }
-    }
-    stage('App test') {
-      steps {
-        sh './mvnw test'
-      }
-    }
-    stage('Generate jar') {
-      steps {
-        sh './mvnw clean package deploy'
-      }
-    }
-    stage('Upload to Artifactory') {
-      steps {
-        sh 'mvn deploy'
+        sh 'mvn clean install deploy'
       }
     }
     stage('Docker Build') {
