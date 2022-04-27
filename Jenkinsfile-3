@@ -10,7 +10,9 @@ pipeline {
        agent any
        steps {
           withSonarQubeEnv('sonarserver') {
-             sh 'mvn clean package sonar:sonar'
+             sh 'mvn clean package sonar:sonar \
+                   -Dsonar.organization=drexxcbba \
+                   -Dsonar.projectKey=drexxcbba_spring-petclinic'
           }
        }
     }
@@ -31,9 +33,9 @@ pipeline {
         sh './mvnw test'
       }
     }
-    stage('Generate jar') {
+    stage('Generate jar and upload to Artifactory') {
       steps {
-        sh './mvnw clean package'
+        sh './mvnw clean package deploy'
       }
     }
     stage('Docker Build') {
