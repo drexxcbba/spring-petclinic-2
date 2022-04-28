@@ -30,14 +30,14 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
-        sh 'docker build -t drexxcbba/petclinic:latest .'
+        sh 'docker build -t drexxcbba/docker-petclinic:latest .'
       }
     }
     stage('Docker Push') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push drexxcbba/petclinic:latest'
+          sh 'docker push drexxcbba/docker-petclinic:latest'
         }
       }
     }
@@ -50,8 +50,8 @@ pipeline {
           remote.user = 'rodrigo'
           remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/petclinic"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d drexxcbba/petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 drexxcbba/docker-petclinic"
         }
       }
     }
