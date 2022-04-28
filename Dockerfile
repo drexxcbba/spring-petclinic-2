@@ -1,7 +1,7 @@
-FROM maven:3.8.5-jdk-11
+FROM openjdk:11-jdk
 
-COPY ./ ./
+WORKDIR /app
 
-RUN mvn clean package
+COPY /target/spring-petclinic-2.6.0-SNAPSHOT.jar spring-petclinic-2.6.0-SNAPSHOT.jar
 
-CMD ["java","-jar","target/spring-petclinic-2.6.0-SNAPSHOT.jar"]
+CMD ["java","-jar","spring-petclinic-2.6.0-SNAPSHOT.jar"]
