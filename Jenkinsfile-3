@@ -65,8 +65,6 @@ pipeline {
           remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
           sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker stop ${CONTAINER_NAME}"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker rm ${CONTAINER_NAME}"
           sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name ${CONTAINER_NAME} drexxcbba/docker-petclinic"
         }
       }
