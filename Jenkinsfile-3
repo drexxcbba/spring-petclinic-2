@@ -6,6 +6,17 @@ pipeline {
      maven '3.6.3'
   }
   stages {
+    stage('snyk testing') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'snyk-1',
+          snykTokenId: 'snyk-token',
+          failOnIssues: false,
+          failOnError: false
+        )
+      }
+    }
     stage("build & SonarQube analysis") {
        agent any
        steps {
@@ -51,7 +62,7 @@ pipeline {
           remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
           sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 drexxcbba/docker-petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name petclinic drexxcbba/docker-petclinic"
         }
       }
     }
