@@ -61,7 +61,7 @@ pipeline {
                 fi
                     docker rm petclinic
             fi
-           '''
+        '''
       }
     }
     stage('Docker pull & Docker run') {
