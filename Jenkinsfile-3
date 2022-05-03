@@ -52,7 +52,7 @@ pipeline {
         }
       }
     }
-    stage('Delete previous container){
+    stage('Delete previous container'){
       steps{
         sh '''
             if [ "$(docker ps -aq -f name=petclinic)" ]; then
@@ -62,7 +62,7 @@ pipeline {
                     docker rm petclinic
             fi
            '''
-         }
+      }
     }
     stage('Docker pull & Docker run') {
       steps{
