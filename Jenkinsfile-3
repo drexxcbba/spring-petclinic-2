@@ -2,9 +2,6 @@
 
 pipeline {
   agent any
-  environment {
-     CONTAINER_NAME = "petclinic"
-  }
   tools {
      maven '3.6.3'
   }
@@ -64,8 +61,16 @@ pipeline {
           remote.user = 'rodrigo'
           remote.password = 'rodrigo24'
           remote.allowAnyHosts = true
+          def val1 = sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker ps -aq -f name=petclinic"
+          def val2 = sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker ps -aq -f status=exited -f name=petclinic"
+          if(val1){
+            if(!val2){
+              sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker stop petclinic"
+            }
+            sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker rm petclinic"
+          }
           sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name ${CONTAINER_NAME} drexxcbba/docker-petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name petclinic drexxcbba/docker-petclinic"
         }
       }
     }
