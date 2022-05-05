@@ -44,6 +44,18 @@ pipeline {
         sh 'docker build -t drexxcbba/docker-petclinic:latest .'
       }
     }
+    stage('Testing the container with Snyk') {
+      steps{
+        snykSecurity( 
+          snykInstallation: 'snyk-1', 
+          snykTokenId: 'snyk-token', 
+          targetFile: 'Dockerfile',
+          additionalArguments: '--docker drexxcbba/docker-petclinic',
+          failOnIssues: false,
+          failOnError: false
+        )
+      }
+    }
     stage('Docker Push') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
