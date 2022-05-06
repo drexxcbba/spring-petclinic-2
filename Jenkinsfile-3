@@ -41,7 +41,7 @@ pipeline {
     }
     stage('Docker Build') {
       steps {
-        sh 'docker build -t drexxcbba/docker-petclinic:latest .'
+        sh 'docker build -t drexxcbba/docker-petclinic-postgres:latest .'
       }
     }
     stage('Testing the container with Snyk') {
@@ -50,7 +50,7 @@ pipeline {
           snykInstallation: 'snyk-1', 
           snykTokenId: 'snyk-token', 
           targetFile: 'Dockerfile',
-          additionalArguments: '--docker drexxcbba/docker-petclinic',
+          additionalArguments: '--docker drexxcbba/docker-petclinic-postgres',
           failOnIssues: false,
           failOnError: false
         )
@@ -60,7 +60,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push drexxcbba/docker-petclinic:latest'
+          sh 'docker push drexxcbba/docker-petclinic-postgres:latest'
         }
       }
     }
@@ -81,8 +81,8 @@ pipeline {
             }
             sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker rm petclinic"
           }
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic"
-          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name petclinic drexxcbba/docker-petclinic"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker pull drexxcbba/docker-petclinic-postgres"
+          sshCommand remote: remote, command: "echo rodrigo24 | sudo -S docker run -d -p 8080:8080 --name petclinic drexxcbba/docker-petclinic-postgres"
         }
       }
     }
