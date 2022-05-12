@@ -33,14 +33,14 @@
     <repository>
         <id>central</id>
         <name>a0nfulcxfntwn-artifactory-primary-0-releases</name>
-        <url>https://drexxcbba.jfrog.io/artifactory/spring-petclinic</url>
+        <url>https://drexxcbba.jfrog.io/artifactory/spring-petclinic-2</url>
     </repository>
     <snapshotRepository>
         <id>snapshots</id>
         <name>a0nfulcxfntwn-artifactory-primary-0-snapshots</name>
-        <url>https://drexxcbba.jfrog.io/artifactory/spring-petclinic</url>
+        <url>https://drexxcbba.jfrog.io/artifactory/spring-petclinic-2</url>
     </snapshotRepository>
-  </distributionManagement>
+</distributionManagement>
 
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
